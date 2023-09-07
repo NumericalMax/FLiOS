@@ -11,6 +11,8 @@
 		19764EED297D3ABE009F3E5D /* BenchmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19764EEC297D3ABE009F3E5D /* BenchmarkModel.swift */; };
 		19764EEF297D3AC9009F3E5D /* BenchmarkSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19764EEE297D3AC9009F3E5D /* BenchmarkSuite.swift */; };
 		21075DC929788ED400311461 /* FLiOSModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21075DC829788ED400311461 /* FLiOSModel.swift */; };
+		2182AAB22AAA5E7200B0389E /* MLFlwrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2182AAB02AAA5E7200B0389E /* MLFlwrClient.swift */; };
+		2182AAB32AAA5E7200B0389E /* MLFlwrClientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2182AAB12AAA5E7200B0389E /* MLFlwrClientModel.swift */; };
 		21A77AC32865B22B0062EBD8 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A77A6F2865B22A0062EBD8 /* Array+Extensions.swift */; };
 		21A77AC42865B22B0062EBD8 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A77A702865B22A0062EBD8 /* Math.swift */; };
 		21A77AC52865B22B0062EBD8 /* UIImage+CVPixelBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A77A712865B22A0062EBD8 /* UIImage+CVPixelBuffer.swift */; };
@@ -126,6 +128,8 @@
 		19764EEC297D3ABE009F3E5D /* BenchmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkModel.swift; sourceTree = "<group>"; };
 		19764EEE297D3AC9009F3E5D /* BenchmarkSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkSuite.swift; sourceTree = "<group>"; };
 		21075DC829788ED400311461 /* FLiOSModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FLiOSModel.swift; sourceTree = "<group>"; };
+		2182AAB02AAA5E7200B0389E /* MLFlwrClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLFlwrClient.swift; sourceTree = "<group>"; };
+		2182AAB12AAA5E7200B0389E /* MLFlwrClientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLFlwrClientModel.swift; sourceTree = "<group>"; };
 		21A77A6F2865B22A0062EBD8 /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		21A77A702865B22A0062EBD8 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		21A77A712865B22A0062EBD8 /* UIImage+CVPixelBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CVPixelBuffer.swift"; sourceTree = "<group>"; };
@@ -345,6 +349,8 @@
 		21A77B162865B23D0062EBD8 /* CoreMLClient */ = {
 			isa = PBXGroup;
 			children = (
+				2182AAB02AAA5E7200B0389E /* MLFlwrClient.swift */,
+				2182AAB12AAA5E7200B0389E /* MLFlwrClientModel.swift */,
 				50CDF0E0299D807300AEBD55 /* DataLoader.swift */,
 				21A77B202865B3B10062EBD8 /* MLModelInspect.swift */,
 				50EB97C929AC9C94000AC771 /* Constants.swift */,
@@ -553,6 +559,7 @@
 				21A77AD82865B22B0062EBD8 /* Normalizer.pb.swift in Sources */,
 				21A77B002865B22B0062EBD8 /* Model.proto in Sources */,
 				19764EEA297D2B12009F3E5D /* BenchmarkInterceptor.swift in Sources */,
+				2182AAB32AAA5E7200B0389E /* MLFlwrClientModel.swift in Sources */,
 				21A77AD62865B22B0062EBD8 /* FeatureTypes.pb.swift in Sources */,
 				21A77AF52865B22B0062EBD8 /* DataStructures.proto in Sources */,
 				21A77AED2865B22B0062EBD8 /* Normalizer.proto in Sources */,
@@ -578,6 +585,7 @@
 				21A77B112865B22B0062EBD8 /* GLMClassifier.proto in Sources */,
 				21A77AC92865B22B0062EBD8 /* UIImage+RawBytes.swift in Sources */,
 				21A77AFC2865B22B0062EBD8 /* ArrayFeatureExtractor.pb.swift in Sources */,
+				2182AAB22AAA5E7200B0389E /* MLFlwrClient.swift in Sources */,
 				21A77AC62865B22B0062EBD8 /* Predictions.swift in Sources */,
 				21A77B082865B22B0062EBD8 /* SoundAnalysisPreprocessing.proto in Sources */,
 				21A77B062865B22B0062EBD8 /* DictVectorizer.pb.swift in Sources */,

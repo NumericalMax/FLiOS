@@ -1,6 +1,6 @@
 //
 //  MLFlwrClient.swift
-//  
+//
 //
 //  Created by Daniel Nugraha on 18.01.23.
 //
@@ -10,6 +10,7 @@ import NIOCore
 import NIOPosix
 import CoreML
 import os
+import flwr
 
 public enum MLTask {
     case train
@@ -25,18 +26,20 @@ public class MLFlwrClient: Client {
     
     private var compiledModelUrl: URL
     private var tempModelUrl: URL
+    private var modelUrl: URL
     
     private let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "flwr.Flower",
                                     category: String(describing: MLFlwrClient.self))
     
-    /// Inits the implementation of the Client protocol.
+    /// Creates an MLFlwrClient instance that conforms to Client protocol.
     ///
     /// - Parameters:
     ///   - layerWrappers: A MLLayerWrapper struct that contains layer information.
     ///   - dataLoader: A MLDataLoader struct that contains train- and testdata batches.
     ///   - compiledModelUrl: An URL specifying the location or path of the compiled model.
-    public init(layerWrappers: [MLLayerWrapper], dataLoader: MLDataLoader, compiledModelUrl: URL) {
-        self.parameters = MLParameter(layerWrappers: layerWrappers)
+    public init(layerWrappers: [MLLayerWrapper], dataLoader: MLDataLoader, compiledModelUrl: URL, modelUrl: URL) {
+        self.modelUrl = modelUrl
+        self.parameters = MLParameter(layerWrappers: layerWrappers, modelUrl: modelUrl, compiledModelUrl: compiledModelUrl)
         self.eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
         self.dataLoader = dataLoader
         self.compiledModelUrl = compiledModelUrl
@@ -51,17 +54,18 @@ public class MLFlwrClient: Client {
         }
     }
     
-    /// Parses the parameters from the local model and returns them as GetParametersRes struct
+    /// Parses the parameters from the local model and returns them as GetParametersRes struct.
     ///
     /// - Returns: Parameters from the local model
     public func getParameters() -> GetParametersRes {
+        parameters.initializeParameters()
         let parameters = parameters.weightsToParameters()
         let status = Status(code: .ok, message: String())
         
         return GetParametersRes(parameters: parameters, status: status)
     }
     
-    /// Calls the routine to fit the local model
+    /// Calls the routine to fit the local model.
     ///
     /// - Returns: The result from the local training, e.g., updated parameters
     public func fit(ins: FitIns) -> FitRes {
@@ -72,7 +76,7 @@ public class MLFlwrClient: Client {
         return FitRes(parameters: parameters, numExamples: result.numSamples, status: status)
     }
     
-    /// Calls the routine to evaluate the local model
+    /// Calls the routine to evaluate the local model.
     ///
     /// - Returns: The result from the evaluation, e.g., loss
     public func evaluate(ins: EvaluateIns) -> EvaluateRes {
@@ -98,7 +102,7 @@ public class MLFlwrClient: Client {
         }
         
         let progressHandler: (MLUpdateContext) -> Void = { contextProgress in
-            let loss = String(format: "%.4f", contextProgress.metrics[.lossValue] as! Double)
+            let loss = String(format: "%.20f", contextProgress.metrics[.lossValue] as! Float)
             switch task {
             case .train:
                 self.log.info("Epoch \(contextProgress.metrics[.epochIndex] as! Int + 1) finished with loss \(loss)")
@@ -113,8 +117,8 @@ public class MLFlwrClient: Client {
                 self.saveModel(finalContext)
             }
             
-            let loss = finalContext.metrics[.lossValue] as! Double
-            let result = MLResult(loss: loss, numSamples: dataset.count, accuracy: (1.0 - loss) * 100)
+            let loss = String(format: "%.20f", finalContext.metrics[.lossValue] as! Double)
+            let result = MLResult(loss: Double(loss)!, numSamples: dataset.count, accuracy: (1.0 - Double(loss)!) * 100)
             promise?.succeed(result)
         }
         
@@ -140,7 +144,7 @@ public class MLFlwrClient: Client {
         return result ?? MLResult(loss: 1, numSamples: 0, accuracy: 0)
     }
     
-    /// Closes the initiated group of event-loop
+    /// Closes the initiated group of event-loop.
     public func closeEventLoopGroup() {
         do {
             try self.eventLoopGroup?.syncShutdownGracefully()
